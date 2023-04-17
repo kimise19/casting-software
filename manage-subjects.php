@@ -49,7 +49,7 @@ if(strlen($_SESSION['alogin'])=="")
 
             <!-- ========== TOP NAVBAR ========== -->
    <?php include('includes/topbar.php');?> 
-            <!-- ========== WRAPPER FOR BOTH SIDEBARS & MAIN CONTENT ========== -->
+       
             <div class="content-wrapper">
                 <div class="content-container">
 <?php include('includes/leftbar.php');?>  
