@@ -33,8 +33,8 @@ include('includes/config.php');?><!DOCTYPE html>
 
                                 <form action="result.php" method="post">
                                 	<div class="form-group">
-                                		<label for="rollid">Ingresa tu nombre</label>
-                                        <input type="text" class="form-control" id="rollid" placeholder="Ingresa tu nombre " autocomplete="off" name="rollid">
+                                		<label for="rollid">Ingresa tú número de cédula</label>
+                                        <input type="text" class="form-control" id="rollid" placeholder="0507131641 " maxleng autocomplete="off" name="rollid">
                                 	</div>
                                <div class="form-group">
                                     <label for="default" class="control-label">Postulación</label>

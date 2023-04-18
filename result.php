@@ -68,7 +68,7 @@ if($stmt->rowCount() > 0)
 foreach($resultss as $row)
 {   ?>
 <p><b>Nombre del Participante :</b> <?php echo htmlentities($row->StudentName);?></p>
-<p><b>Nobre de usuario :</b> <?php echo htmlentities($row->RollId);?>
+<p><b>Cédula :</b> <?php echo htmlentities($row->RollId);?>
 <p><b>Nombre proyecto :</b> <?php echo htmlentities($row->ClassName);?>(<?php echo htmlentities($row->Section);?>)
 <?php }
 
