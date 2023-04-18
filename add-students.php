@@ -7,8 +7,7 @@ if(strlen($_SESSION['alogin'])=="")
     header("Location: index.php"); 
     }
     else{
-        
-if(isset($_POST['submit2']))
+if(isset($_POST['submit']))
 {
 $studentname=$_POST['fullanme'];
 $roolid=$_POST['rollid']; 
@@ -17,7 +16,10 @@ $gender=$_POST['gender'];
 $classid=$_POST['class']; 
 $dob=$_POST['dob']; 
 $status=1;
-$sql="INSERT INTO  tblstudents(StudentName,RollId,StudentEmail,Gender,ClassId,DOB,Status) VALUES(:studentname,:roolid,:studentemail,:gender,:classid,:dob,:status,)";
+$desc_1=$_POST['desc']; 
+$foto_1=$_FILES['image']['name']; 
+//print_r($desc_1, );
+$sql="INSERT INTO  tblstudents(StudentName,RollId,StudentEmail,Gender,ClassId,DOB,Status,descripcion, img) VALUES(:studentname,:roolid,:studentemail,:gender,:classid,:dob,:status,:desc_1,:foto_1)";
 $query = $dbh->prepare($sql);
 $query->bindParam(':studentname',$studentname,PDO::PARAM_STR);
 $query->bindParam(':roolid',$roolid,PDO::PARAM_STR);
@@ -26,7 +28,10 @@ $query->bindParam(':gender',$gender,PDO::PARAM_STR);
 $query->bindParam(':classid',$classid,PDO::PARAM_STR);
 $query->bindParam(':dob',$dob,PDO::PARAM_STR);
 $query->bindParam(':status',$status,PDO::PARAM_STR);
+$query->bindParam(':desc_1',$desc_1,PDO::PARAM_STR);
+$query->bindParam(':foto_1',$foto_1,PDO::PARAM_STR);
 $query->execute();
+
 $lastInsertId = $dbh->lastInsertId();
 if($lastInsertId)
 {
@@ -114,7 +119,7 @@ $error="Something went wrong. Please try again";
                                             <strong>oh rayos!!</strong> <?php echo htmlentities($error); ?>
                                         </div>
                                         <?php } ?>
-                                        <form class="form-horizontal" method="post">
+                                        <form class="form-horizontal" method="post" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <label for="default" class="col-sm-2 control-label">Nombre
                                                     Completo</label>
@@ -124,17 +129,15 @@ $error="Something went wrong. Please try again";
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="default" class="col-sm-2 control-label">Cédula</label>
+                                                <label for="numero" class="col-sm-2 control-label">Cédula</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" name="cedula" id="cedula"
-                                                        onblur="validarCedula();" required>
+                                                    <input type="text" name="rollid" class="form-control" id="rollid"
+                                                        onblur="validarCedula();" maxlength="10" required="required"
+                                                        autocomplete="off">
                                                 </div>
-                                                <!--- validar cedula -->
-
                                             </div>
                                             <div class="form-group">
-                                                <label for="default" class="col-sm-2 control-label">Correo
-                                                    Electrónico</label>
+                                                <label for="default" class="col-sm-2 control-label">Correo</label>
                                                 <div class="col-sm-10">
                                                     <input type="email" name="emailid" class="form-control" id="email"
                                                         required="required" autocomplete="off">
@@ -157,13 +160,13 @@ $error="Something went wrong. Please try again";
                                                         required="required">
                                                         <option value="">Selecciona proyecto</option>
                                                         <?php $sql = "SELECT * from tblclasses";
-                                                            $query = $dbh->prepare($sql);
-                                                            $query->execute();
-                                                            $results=$query->fetchAll(PDO::FETCH_OBJ);
-                                                            if($query->rowCount() > 0)
-                                                            {
-                                                            foreach($results as $result)
-                                                            {   ?>
+                                                                $query = $dbh->prepare($sql);
+                                                                $query->execute();
+                                                                $results=$query->fetchAll(PDO::FETCH_OBJ);
+                                                                if($query->rowCount() > 0)
+                                                                {
+                                                                foreach($results as $result)
+                                                                {   ?>
                                                         <option value="<?php echo htmlentities($result->id); ?>">
                                                             <?php echo htmlentities($result->ClassName); ?>&nbsp;
                                                             Section-<?php echo htmlentities($result->Section); ?>
@@ -179,12 +182,22 @@ $error="Something went wrong. Please try again";
                                                     <input type="date" name="dob" class="form-control" id="date">
                                                 </div>
                                             </div>
-                                            <!-- <form method="post" enctype="multipart/form-data">
-                                                <label for="imagen">Seleccionar imagen:</label>
-                                                <input type="file" name="imagen" id="imagen">
-                                                <br><br>
-                                                <input type="submit" name="submit" value="Subir imagen">
-                                            </form> -->
+                                            <!-- SUBIR FOTO DE PERFIL   -->
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Foto de perfil</label>
+                                                <div class="col-sm-10">
+                                                    <label for="imagen"></label>
+                                                    <input type="file" name="image" id="image">
+                                                </div>
+
+                                            </div>
+                                            <!-- FIN  SUBIR FOTO DE PERFIL   -->
+                                            <div class="form-group">
+                                                <label for="default" class="col-sm-2 control-label">Descripcion</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="desc" class="form-control" id="desc">
+                                                </div>
+                                            </div>
                                             <div class="form-group">
                                                 <div class="col-sm-offset-2 col-sm-10">
                                                     <button type="submit" name="submit"
@@ -205,17 +218,9 @@ $error="Something went wrong. Please try again";
             <!-- /.content-wrapper -->
         </div>
         <!-- /.main-wrapper -->
-        <script src="js/jquery/jquery-2.2.4.min.js"></script>
-        <script src="js/bootstrap/bootstrap.min.js"></script>
-        <script src="js/pace/pace.min.js"></script>
-        <script src="js/lobipanel/lobipanel.min.js"></script>
-        <script src="js/iscroll/iscroll.js"></script>
-        <script src="js/prism/prism.js"></script>
-        <script src="js/select2/select2.min.js"></script>
-        <script src="js/main.js"></script>
         <script>
         function validarCedula() {
-            var cedula = document.getElementById("cedula").value;
+            var cedula = document.getElementById("rollid").value;
 
             // Eliminamos cualquier carácter que no sea un número
             cedula = cedula.replace(/[^0-9]/g, '');
@@ -250,6 +255,14 @@ $error="Something went wrong. Please try again";
             return true;
         }
         </script>
+        <script src="js/jquery/jquery-2.2.4.min.js"></script>
+        <script src="js/bootstrap/bootstrap.min.js"></script>
+        <script src="js/pace/pace.min.js"></script>
+        <script src="js/lobipanel/lobipanel.min.js"></script>
+        <script src="js/iscroll/iscroll.js"></script>
+        <script src="js/prism/prism.js"></script>
+        <script src="js/select2/select2.min.js"></script>
+        <script src="js/main.js"></script>
         <script>
         $(function($) {
             $(".js-states").select2();
