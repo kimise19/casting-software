@@ -5,52 +5,54 @@ include('includes/config.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    	<meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Sistema Administrativo de Asistencia</title>
-        <link rel="stylesheet" href="css/bootstrap.min.css" media="screen" >
-        <link rel="stylesheet" href="css/font-awesome.min.css" media="screen" >
-        <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen" >
-        <link rel="stylesheet" href="css/lobipanel/lobipanel.min.css" media="screen" >
-        <link rel="stylesheet" href="css/prism/prism.css" media="screen" >
-        <link rel="stylesheet" href="css/main.css" media="screen" >
-        <script src="js/modernizr/modernizr.min.js"></script>
-    </head>
-    <body>
-        <div class="main-wrapper">
-            <div class="content-wrapper">
-                <div class="content-container">
 
-         
-                    <!-- /.left-sidebar -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sistema Administrativo de Asistencia</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
+    <link rel="stylesheet" href="css/font-awesome.min.css" media="screen">
+    <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen">
+    <link rel="stylesheet" href="css/lobipanel/lobipanel.min.css" media="screen">
+    <link rel="stylesheet" href="css/prism/prism.css" media="screen">
+    <link rel="stylesheet" href="css/main.css" media="screen">
+    <script src="js/modernizr/modernizr.min.js"></script>
+</head>
 
-                    <div class="main-page">
-                        <div class="container-fluid">
-                            <div class="row page-title-div">
-                                <div class="col-md-12">
-                                    <h2 class="title" align="center">Sistema de consultas de participantes</h2>
-                                </div>
+<body>
+    <div class="main-wrapper">
+        <div class="content-wrapper">
+            <div class="content-container">
+
+
+                <!-- /.left-sidebar -->
+
+                <div class="main-page">
+                    <div class="container-fluid">
+                        <div class="row page-title-div">
+                            <div class="col-md-12">
+                                <h2 class="title" align="center">Sistema de consultas de participantes</h2>
                             </div>
-                            <!-- /.row -->
-                          
-                            <!-- /.row -->
                         </div>
-                        <!-- /.container-fluid -->
+                        <!-- /.row -->
 
-                        <section class="section">
-                            <div class="container-fluid">
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.container-fluid -->
 
-                                <div class="row">
-                              
-                             
+                    <section class="section">
+                        <div class="container-fluid">
 
-                                    <div class="col-md-8 col-md-offset-2">
-                                        <div class="panel">
-                                            <div class="panel-heading">
-                                                <div class="panel-title">
-<?php
+                            <div class="row">
+
+
+
+                                <div class="col-md-8 col-md-offset-2">
+                                    <div class="panel">
+                                        <div class="panel-heading">
+                                            <div class="panel-title">
+                                                <?php
 // code Student Data
 $rollid=$_POST['rollid'];
 $classid=$_POST['class'];
@@ -67,10 +69,12 @@ if($stmt->rowCount() > 0)
 {
 foreach($resultss as $row)
 {   ?>
-<p><b>Nombre del Participante :</b> <?php echo htmlentities($row->StudentName);?></p>
-<p><b>Cédula :</b> <?php echo htmlentities($row->RollId);?>
-<p><b>Nombre proyecto :</b> <?php echo htmlentities($row->ClassName);?>(<?php echo htmlentities($row->Section);?>)
-<?php }
+                                                <p><b>Nombre del Participante :</b>
+                                                    <?php echo htmlentities($row->StudentName);?></p>
+                                                <p><b>Cédula :</b> <?php echo htmlentities($row->RollId);?>
+                                                <p><b>Nombre proyecto :</b>
+                                                    <?php echo htmlentities($row->ClassName);?>(<?php echo htmlentities($row->Section);?>)
+                                                    <?php }
 
     ?>
                                             </div>
@@ -83,19 +87,19 @@ foreach($resultss as $row)
 
 
                                                 <table class="table table-hover table-bordered">
-                                                <thead>
+                                                    <thead>
                                                         <tr>
                                                             <th>#</th>
-                                                            <th>aptitud</th>    
+                                                            <th>aptitud</th>
                                                             <th>Calificación</th>
                                                         </tr>
-                                               </thead>
-  
+                                                    </thead>
 
 
-                                                	
-                                                	<tbody>
-<?php                                              
+
+
+                                                    <tbody>
+                                                        <?php                                              
 // Code for result
 
  $query ="select t.StudentName,t.RollId,t.ClassId,t.marks,SubjectId,tblsubjects.SubjectName from (select sts.StudentName,sts.RollId,sts.ClassId,tr.marks,SubjectId from tblstudents as sts join  tblresult as tr on tr.StudentId=sts.StudentId) as t join tblsubjects on tblsubjects.id=t.SubjectId where (t.RollId=:rollid and t.ClassId=:classid)";
@@ -112,47 +116,54 @@ foreach($results as $result){
 
     ?>
 
-                                                		<tr>
-                                                <th scope="row"><?php echo htmlentities($cnt);?></th>
-                                                			<td><?php echo htmlentities($result->SubjectName);?></td>
-                                                			<td><?php echo htmlentities($totalmarks=$result->marks);?></td>
-                                                		</tr>
-<?php 
+                                                        <tr>
+                                                            <th scope="row"><?php echo htmlentities($cnt);?></th>
+                                                            <td><?php echo htmlentities($result->SubjectName);?></td>
+                                                            <td><?php echo htmlentities($totalmarks=$result->marks);?>
+                                                            </td>
+                                                        </tr>
+                                                        <?php 
 $totlcount+=$totalmarks;
 $cnt++;}
 ?>
-<tr>
-                                                <th scope="row" colspan="2">Calificación Total</th>
-<td><b><?php echo htmlentities($totlcount); ?></b> de <b><?php echo htmlentities($outof=($cnt-1)*100); ?></b></td>
+                                                        <tr>
+                                                            <th scope="row" colspan="2">Calificación Total</th>
+                                                            <td><b><?php echo htmlentities($totlcount); ?></b> de
+                                                                <b><?php echo htmlentities($outof=($cnt-1)*100); ?></b>
+                                                            </td>
                                                         </tr>
-<tr>
-                                                <th scope="row" colspan="2">Porcentaje</th>           
-                                                            <td><b><?php echo  htmlentities($totlcount*(100)/$outof); ?> %</b></td>
-                                                             </tr>
-<tr>
-                                                
+                                                        <tr>
+                                                            <th scope="row" colspan="2">Porcentaje</th>
+                                                            <td><b><?php echo  htmlentities($totlcount*(100)/$outof); ?>
+                                                                    %</b></td>
+                                                        </tr>
+                                                        <tr>
 
- <?php } else { ?>     
-<div class="alert alert-warning left-icon-alert" role="alert">
-                                            <strong>Nota!</strong> Tus resultados aun no han sido publicados aun
- <?php }
+
+                                                            <?php } else { ?>
+                                                            <div class="alert alert-warning left-icon-alert"
+                                                                role="alert">
+                                                                <strong>Nota!</strong> Tus resultados aun no han sido
+                                                                publicados aun
+                                                                <?php }
 ?>
-                                        </div>
- <?php 
+                                                            </div>
+                                                            <?php 
  } else
  {?>
 
-<div class="alert alert-danger left-icon-alert" role="alert">
-strong>oh rayos!!</strong>
-<?php
+                                                            <div class="alert alert-danger left-icon-alert"
+                                                                role="alert">
+                                                                strong>oh rayos!!</strong>
+                                                                <?php
 echo htmlentities("ID inválido");
  }
 ?>
-                                        </div>
+                                                            </div>
 
 
 
-                                                	</tbody>
+                                                    </tbody>
                                                 </table>
 
                                             </div>
@@ -162,51 +173,52 @@ echo htmlentities("ID inválido");
                                     <!-- /.col-md-6 -->
 
                                     <div class="form-group">
-                                                           
-                                                            <div class="col-sm-6">
-                                                               <a href="index.php">Volver al inicio</a>
-                                                            </div>
-                                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <a href="index.php">Volver al inicio</a>
+                                        </div>
+                                    </div>
 
                                 </div>
                                 <!-- /.row -->
-  
+
                             </div>
                             <!-- /.container-fluid -->
-                        </section>
-                        <!-- /.section -->
+                    </section>
+                    <!-- /.section -->
 
-                    </div>
-                    <!-- /.main-page -->
-
-                  
                 </div>
-                <!-- /.content-container -->
+                <!-- /.main-page -->
+
+
             </div>
-            <!-- /.content-wrapper -->
-
+            <!-- /.content-container -->
         </div>
-        <!-- /.main-wrapper -->
+        <!-- /.content-wrapper -->
 
-        <!-- ========== COMMON JS FILES ========== -->
-        <script src="js/jquery/jquery-2.2.4.min.js"></script>
-        <script src="js/bootstrap/bootstrap.min.js"></script>
-        <script src="js/pace/pace.min.js"></script>
-        <script src="js/lobipanel/lobipanel.min.js"></script>
-        <script src="js/iscroll/iscroll.js"></script>
+    </div>
+    <!-- /.main-wrapper -->
 
-        <!-- ========== PAGE JS FILES ========== -->
-        <script src="js/prism/prism.js"></script>
+    <!-- ========== COMMON JS FILES ========== -->
+    <script src="js/jquery/jquery-2.2.4.min.js"></script>
+    <script src="js/bootstrap/bootstrap.min.js"></script>
+    <script src="js/pace/pace.min.js"></script>
+    <script src="js/lobipanel/lobipanel.min.js"></script>
+    <script src="js/iscroll/iscroll.js"></script>
 
-        <!-- ========== THEME JS ========== -->
-        <script src="js/main.js"></script>
-        <script>
-            $(function($) {
+    <!-- ========== PAGE JS FILES ========== -->
+    <script src="js/prism/prism.js"></script>
 
-            });
-        </script>
+    <!-- ========== THEME JS ========== -->
+    <script src="js/main.js"></script>
+    <script>
+    $(function($) {
 
-        <!-- ========== ADD custom.js FILE BELOW WITH YOUR CHANGES ========== -->
+    });
+    </script>
 
-    </body>
+    <!-- ========== ADD custom.js FILE BELOW WITH YOUR CHANGES ========== -->
+
+</body>
+
 </html>

@@ -16,9 +16,10 @@ $gender=$_POST['gender'];
 $classid=$_POST['class']; 
 $dob=$_POST['dob']; 
 $status=1;
+$desc_1=$_POST['desc']; 
 $foto_1=$_FILES['image']['name']; 
 //print_r($desc_1, );
-$sql="INSERT INTO  tblstudents(StudentName,RollId,StudentEmail,Gender,ClassId,DOB,Status,descripcion, img) VALUES(:studentname,:roolid,:studentemail,:gender,:classid,:dob,:status,:foto_1)";
+$sql="INSERT INTO  tblstudents(StudentName,RollId,StudentEmail,Gender,ClassId,DOB,Status,descripcion, img) VALUES(:studentname,:roolid,:studentemail,:gender,:classid,:dob,:status,:desc_1,:foto_1)";
 $query = $dbh->prepare($sql);
 $query->bindParam(':studentname',$studentname,PDO::PARAM_STR);
 $query->bindParam(':roolid',$roolid,PDO::PARAM_STR);
@@ -27,6 +28,7 @@ $query->bindParam(':gender',$gender,PDO::PARAM_STR);
 $query->bindParam(':classid',$classid,PDO::PARAM_STR);
 $query->bindParam(':dob',$dob,PDO::PARAM_STR);
 $query->bindParam(':status',$status,PDO::PARAM_STR);
+$query->bindParam(':desc_1',$desc_1,PDO::PARAM_STR);
 $query->bindParam(':foto_1',$foto_1,PDO::PARAM_STR);
 $query->execute();
 
@@ -190,12 +192,12 @@ $error="Something went wrong. Please try again";
 
                                             </div>
                                             <!-- FIN  SUBIR FOTO DE PERFIL   -->
-                                            <!-- <div class="form-group">
+                                            <div class="form-group">
                                                 <label for="default" class="col-sm-2 control-label">Descripcion</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" name="desc" class="form-control" id="desc">
+                                                    <input type="text" required="required" name="desc" class="form-control" id="desc" >
                                                 </div>
-                                            </div> -->
+                                            </div>
                                             <div class="form-group">
                                                 <div class="col-sm-offset-2 col-sm-10">
                                                     <button type="submit" name="submit"
